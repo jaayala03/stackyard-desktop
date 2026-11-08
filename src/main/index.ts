@@ -77,6 +77,14 @@ function registerIpc(): void {
 
   ipcMain.handle('system:tools', () => ddev.tools())
   ipcMain.handle('system:locale', () => app.getLocale())
+  ipcMain.handle('system:version', () => app.getVersion())
+  ipcMain.handle('system:openDoc', async (_e, kind: 'license' | 'terms') => {
+    const lang = loadSettings().language
+    const spanish = lang === 'es' || (lang === 'auto' && app.getLocale().toLowerCase().startsWith('es'))
+    const file = kind === 'license' ? 'LICENSE' : spanish ? 'TERMINOS.md' : 'TERMS.md'
+    const dir = app.isPackaged ? join(process.resourcesPath, 'docs') : app.getAppPath()
+    await shell.openPath(join(dir, file))
+  })
 
   ipcMain.handle('projects:list', () => ddev.listProjects())
   ipcMain.handle('projects:action', (_e, name: string, approot: string, action: ProjectAction) =>

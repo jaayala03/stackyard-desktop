@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Language, NotifyMode, Settings, Theme } from '@shared/types'
 import { useT } from '../i18n'
 import { Dialog } from './Dialog'
@@ -18,6 +18,10 @@ export function SettingsDialog({ settings, onSave, onClose }: Props): React.JSX.
   const [notifications, setNotifications] = useState<NotifyMode>(settings.notifications)
   const [autoStopMinutes, setAutoStopMinutes] = useState(settings.autoStopMinutes)
   const [checkUpdates, setCheckUpdates] = useState(settings.checkUpdates)
+  const [version, setVersion] = useState('')
+  useEffect(() => {
+    void window.api.system.version().then(setVersion)
+  }, [])
   const autoStopOptions = [0, 30, 60, 120]
   if (!autoStopOptions.includes(autoStopMinutes)) autoStopOptions.push(autoStopMinutes)
 
@@ -102,6 +106,24 @@ export function SettingsDialog({ settings, onSave, onClose }: Props): React.JSX.
           {t('tray.settings.checkUpdates')}
         </label>
       </div>
+
+      <section className="about" aria-label={t('about.title')}>
+        <h3>
+          {t('about.title')} {version && <span className="muted">v{version}</span>}
+        </h3>
+        <p className="muted small">{t('about.disclaimer')}</p>
+        <div className="button-row">
+          <button type="button" className="btn small" onClick={() => void window.api.system.openDoc('license')}>
+            {t('about.license')}
+          </button>
+          <button type="button" className="btn small" onClick={() => void window.api.system.openDoc('terms')}>
+            {t('about.terms')}
+          </button>
+          <button type="button" className="btn small" onClick={() => void window.api.shell.openUrl('https://github.com/jaayala03/stackyard-desktop')}>
+            {t('about.repo')}
+          </button>
+        </div>
+      </section>
     </Dialog>
   )
 }

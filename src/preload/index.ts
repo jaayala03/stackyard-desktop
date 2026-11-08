@@ -13,7 +13,9 @@ const api: Api = {
   },
   system: {
     tools: () => ipcRenderer.invoke('system:tools'),
-    systemLocale: () => ipcRenderer.invoke('system:locale')
+    systemLocale: () => ipcRenderer.invoke('system:locale'),
+    version: () => ipcRenderer.invoke('system:version'),
+    openDoc: (kind) => ipcRenderer.invoke('system:openDoc', kind)
   },
   projects: {
     list: () => ipcRenderer.invoke('projects:list'),

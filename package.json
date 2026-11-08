@@ -5,6 +5,11 @@
   "description": "Local web development environments powered by DDEV, for Windows, macOS and Linux",
   "author": "Jonathan Ayala",
   "license": "MIT",
+  "homepage": "https://github.com/jaayala03/stackyard-desktop",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaayala03/stackyard-desktop.git"
+  },
   "private": true,
   "main": "./out/main/index.js",
   "scripts": {

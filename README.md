@@ -1,3 +1,5 @@
+<p align="center"><img src="build/icon.svg" width="96" alt="Stackyard"></p>
+
 <h1 align="center">Stackyard Desktop</h1>
 
 <p align="center">
@@ -5,21 +7,24 @@ Local web development environments powered by <a href="https://ddev.com">DDEV</a
 <b>Windows, macOS and Linux</b>.
 </p>
 
+[Leer en español](README.es.md)
+
 Cross-platform rewrite of [Stackyard](https://github.com/jaayala03/stackyard) (GTK, Linux only) using
 **Electron + React + TypeScript**. Terminal: xterm.js + node-pty.
 
 ## Status
 
-Early work in progress (v0.1). Already in:
+Version 0.1, work in progress. Includes:
 
-- Project list with live status, search and auto refresh
-- Start / stop / restart / delete, open URL, folder and editor, `ddev ssh`, logs
-- Create, clone or add an existing project (Laravel, WordPress, Symfony, Drupal, CodeIgniter, CakePHP, Craft, PHP…)
-- Embedded terminal for every job
+- Project list with live status, search and auto refresh; start, stop, restart, delete
+- Create, clone or add a project (Laravel, WordPress, Symfony, Drupal, CodeIgniter, CakePHP, Craft, PHP, Node.js…)
+- Embedded terminal for every action; SSH and logs
+- **Git**, **Code** (editor), **.env**, **Database** (import/export, phpMyAdmin), **Snapshots**, **Share** (public tunnel),
+  **Deploy** (pm2) and **Node** (backend/frontend services) tabs
+- Tray icon, notifications, auto-stop of idle projects and update notice
 - English and Spanish, light and dark themes
 
-Still to port from the GTK app: Git tab, code editor, `.env` editor, snapshots, database import/export,
-Node.js projects, pm2 Deploy tab, tray icon, share/tunnels, update check.
+Not yet tested against a real DDEV install on every platform.
 
 ## Requirements
 
@@ -39,6 +44,8 @@ npm run dist:win   # installer in dist/ (also dist:linux, dist:mac)
 New projects are created by default in `D:\laragon\www` on Windows (when it exists) and `~/projects` elsewhere;
 change it in Settings.
 
-## License
+## License and terms
 
-MIT
+- Code under the [MIT](LICENSE) license.
+- [Terms of use and privacy](TERMS.md) ([en español](TERMINOS.md)): no warranty; the app collects no data.
+- Stackyard is an **independent** project, not affiliated with the [DDEV](https://github.com/ddev/ddev) project or Docker. Their names are trademarks of their owners.

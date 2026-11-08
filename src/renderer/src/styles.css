@@ -561,3 +561,7 @@ input[aria-invalid='true'] {
 .tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 14px; cursor: pointer; color: inherit; font: inherit; }
 .tab:hover { background: rgba(127, 127, 127, 0.12); }
 .tab.active { border-bottom-color: var(--accent, #3b82f6); font-weight: 600; }
+
+.about { margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--border, #ccc); }
+.about h3 { margin: 0 0 6px; font-size: 14px; }
+.about p { margin: 0 0 10px; }

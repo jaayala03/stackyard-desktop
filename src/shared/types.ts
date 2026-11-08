@@ -73,7 +73,13 @@ export interface Api {
   /** Generic bridge used by feature modules (git, code, env…): `invoke('git:status', approot)`. */
   invoke<T = unknown>(channel: string, ...args: unknown[]): Promise<T>
   settings: { get(): Promise<Settings>; set(s: Partial<Settings>): Promise<Settings> }
-  system: { tools(): Promise<ToolStatus>; systemLocale(): Promise<string> }
+  system: {
+    tools(): Promise<ToolStatus>
+    systemLocale(): Promise<string>
+    version(): Promise<string>
+    /** Opens the bundled LICENSE or terms of use (in the app language). */
+    openDoc(kind: 'license' | 'terms'): Promise<void>
+  }
   projects: {
     list(): Promise<Project[]>
     action(name: string, approot: string, action: ProjectAction): Promise<TermSession>

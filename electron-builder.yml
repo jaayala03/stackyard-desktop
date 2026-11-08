@@ -1,5 +1,6 @@
 appId: com.jaayala03.stackyard
 productName: Stackyard
+artifactName: ${productName}-${version}-${os}-${arch}.${ext}
 directories:
   buildResources: build
 files:
@@ -23,7 +24,10 @@ nsis:
   allowToChangeInstallationDirectory: true
 mac:
   target: dmg
+  identity: null
   category: public.app-category.developer-tools
 linux:
   target: [AppImage, deb]
+  maintainer: Jonathan Ayala <jaayala03@users.noreply.github.com>
+  synopsis: Local web development environments powered by DDEV
   category: Development

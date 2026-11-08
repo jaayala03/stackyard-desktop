@@ -4,6 +4,8 @@ import { codeEs } from './code'
 import { envEs } from './env'
 import { snapEs } from './snap'
 import { dbEs } from './db'
+import { nodeEs } from './node'
+import { deployEs } from './deploy'
 
 export const es: Messages = {
   ...gitEs,
@@ -11,6 +13,8 @@ export const es: Messages = {
   ...envEs,
   ...snapEs,
   ...dbEs,
+  ...nodeEs,
+  ...deployEs,
   'app.name': 'Stackyard',
   'search.placeholder': 'Buscar proyectos…',
   'projects.empty': 'Aún no hay proyectos',
@@ -92,5 +96,7 @@ export const es: Messages = {
   'tab.code': 'Código',
   'tab.env': '.env',
   'tab.snap': 'Snapshots',
-  'tab.db': 'Base de datos'
+  'tab.db': 'Base de datos',
+  'tab.node': 'Node.js',
+  'tab.deploy': 'Deploy'
 }

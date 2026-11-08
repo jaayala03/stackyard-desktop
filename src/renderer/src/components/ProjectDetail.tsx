@@ -9,9 +9,11 @@ import { EnvTab } from '../features/EnvTab'
 import { GitTab } from '../features/GitTab'
 import { SnapTab } from '../features/SnapTab'
 import { DbTab } from '../features/DbTab'
+import { NodeTab } from '../features/NodeTab'
+import { DeployTab } from '../features/DeployTab'
 
-type Tab = 'overview' | 'git' | 'code' | 'env' | 'snap' | 'db'
-const TABS: Tab[] = ['overview', 'git', 'code', 'env', 'db', 'snap']
+type Tab = 'overview' | 'git' | 'code' | 'env' | 'snap' | 'db' | 'node' | 'deploy'
+const TABS: Tab[] = ['overview', 'node', 'git', 'code', 'env', 'db', 'snap', 'deploy']
 
 interface Props {
   project: Project
@@ -76,7 +78,7 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
       </header>
 
       <div className="tabs" role="tablist">
-        {TABS.map((id) => (
+        {TABS.filter((id) => id !== 'node' || p.type === 'node').map((id) => (
           <button key={id} type="button" role="tab" aria-selected={tab === id} className={`tab${tab === id ? ' active' : ''}`} onClick={() => setTab(id)}>
             {t(`tab.${id}` as 'tab.git')}
           </button>
@@ -88,6 +90,8 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
       {tab === 'env' && <EnvTab project={p} />}
       {tab === 'snap' && <SnapTab project={p} />}
       {tab === 'db' && <DbTab project={p} />}
+      {tab === 'node' && <NodeTab project={p} />}
+      {tab === 'deploy' && <DeployTab project={p} />}
 
       {tab === 'overview' && (
         <>

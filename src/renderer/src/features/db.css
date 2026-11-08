@@ -1,0 +1,13 @@
+.db-tab { display: flex; flex-direction: column; gap: 18px; padding-bottom: 16px; }
+.db-section h2 { font-size: 1rem; margin: 0 0 8px; }
+.db-section p { margin: 0 0 8px; }
+.db-conn { margin: 0; display: grid; gap: 6px; }
+.db-row { display: grid; grid-template-columns: 200px 1fr auto; align-items: center; gap: 12px; }
+.db-row dt { color: var(--muted, #888); }
+.db-row dd { margin: 0; overflow-wrap: anywhere; }
+.db-inline { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.db-inline label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
+.db-input { padding: 6px 8px; min-width: 200px; border: 1px solid var(--border, #ccc); border-radius: 6px; background: transparent; color: inherit; font: inherit; }
+.db-output { margin: 0; padding: 10px; max-height: 260px; overflow: auto; white-space: pre-wrap; border: 1px solid var(--border, #ccc); border-radius: 6px; font-size: 0.85rem; }
+.db-output.failed { border-color: #d33; }
+@media (max-width: 720px) { .db-row { grid-template-columns: 1fr auto; } .db-row dt { grid-column: 1 / -1; } }

@@ -1,3 +1,50 @@
-// Messages for the snap tab. Keys prefixed 'snap.'; both languages need the same keys.
-export const snapEn = {} as Record<`snap.${string}`, string>
-export const snapEs = {} as Record<`snap.${string}`, string>
+// Messages for the snapshots tab. Keys prefixed 'snap.'; both languages have the same keys.
+export const snapEn = {
+  'snap.intro': 'A snapshot is a full copy of the database stored in .ddev/db_snapshots. Restoring one replaces the current database.',
+  'snap.notRunning': 'Start the project to create or restore snapshots.',
+  'snap.nameLabel': 'Snapshot name',
+  'snap.nameInvalid': 'Use letters, numbers, - and _ (it must start with a letter or number).',
+  'snap.create': 'Create snapshot',
+  'snap.refresh': 'Refresh',
+  'snap.loading': 'Loading snapshots…',
+  'snap.empty': 'No snapshots yet.',
+  'snap.loadError': 'Could not list snapshots: {error}',
+  'snap.restore': 'Restore',
+  'snap.delete': 'Delete',
+  'snap.cleanup': 'Delete all',
+  'snap.working': 'Working…',
+  'snap.output': 'Output',
+  'snap.done': 'Done.',
+  'snap.failed': 'The command failed. Check the output below.',
+  'snap.restore.title': 'Restore {name}?',
+  'snap.restore.text': 'The current database of this project will be replaced with the contents of this snapshot.',
+  'snap.delete.title': 'Delete snapshot {name}?',
+  'snap.delete.text': 'The snapshot file will be removed. This cannot be undone.',
+  'snap.cleanup.title': 'Delete all snapshots?',
+  'snap.cleanup.text': 'Every snapshot of this project will be removed. This cannot be undone.'
+}
+
+export const snapEs = {
+  'snap.intro': 'Un snapshot es una copia completa de la base de datos guardada en .ddev/db_snapshots. Restaurar uno reemplaza la base de datos actual.',
+  'snap.notRunning': 'Inicia el proyecto para crear o restaurar snapshots.',
+  'snap.nameLabel': 'Nombre del snapshot',
+  'snap.nameInvalid': 'Usa letras, números, - y _ (debe empezar con una letra o un número).',
+  'snap.create': 'Crear snapshot',
+  'snap.refresh': 'Actualizar',
+  'snap.loading': 'Cargando snapshots…',
+  'snap.empty': 'Aún no hay snapshots.',
+  'snap.loadError': 'No se pudieron listar los snapshots: {error}',
+  'snap.restore': 'Restaurar',
+  'snap.delete': 'Eliminar',
+  'snap.cleanup': 'Eliminar todos',
+  'snap.working': 'Trabajando…',
+  'snap.output': 'Salida',
+  'snap.done': 'Listo.',
+  'snap.failed': 'El comando falló. Revisa la salida de abajo.',
+  'snap.restore.title': '¿Restaurar {name}?',
+  'snap.restore.text': 'La base de datos actual de este proyecto se reemplazará con el contenido de este snapshot.',
+  'snap.delete.title': '¿Eliminar el snapshot {name}?',
+  'snap.delete.text': 'Se borrará el archivo del snapshot. No se puede deshacer.',
+  'snap.cleanup.title': '¿Eliminar todos los snapshots?',
+  'snap.cleanup.text': 'Se borrarán todos los snapshots de este proyecto. No se puede deshacer.'
+}

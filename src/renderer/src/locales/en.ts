@@ -1,11 +1,15 @@
 import { gitEn } from './git'
 import { codeEn } from './code'
 import { envEn } from './env'
+import { snapEn } from './snap'
+import { dbEn } from './db'
 
 export const en = {
   ...gitEn,
   ...codeEn,
   ...envEn,
+  ...snapEn,
+  ...dbEn,
   'app.name': 'Stackyard',
   'search.placeholder': 'Search projects…',
   'projects.empty': 'No projects yet',
@@ -85,7 +89,9 @@ export const en = {
   'tab.overview': 'Overview',
   'tab.git': 'Git',
   'tab.code': 'Code',
-  'tab.env': '.env'
+  'tab.env': '.env',
+  'tab.snap': 'Snapshots',
+  'tab.db': 'Database'
 }
 
 export type Messages = typeof en

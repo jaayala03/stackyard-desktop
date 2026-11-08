@@ -2,11 +2,15 @@ import type { Messages } from './en'
 import { gitEs } from './git'
 import { codeEs } from './code'
 import { envEs } from './env'
+import { snapEs } from './snap'
+import { dbEs } from './db'
 
 export const es: Messages = {
   ...gitEs,
   ...codeEs,
   ...envEs,
+  ...snapEs,
+  ...dbEs,
   'app.name': 'Stackyard',
   'search.placeholder': 'Buscar proyectos…',
   'projects.empty': 'Aún no hay proyectos',
@@ -86,5 +90,7 @@ export const es: Messages = {
   'tab.overview': 'Resumen',
   'tab.git': 'Git',
   'tab.code': 'Código',
-  'tab.env': '.env'
+  'tab.env': '.env',
+  'tab.snap': 'Snapshots',
+  'tab.db': 'Base de datos'
 }

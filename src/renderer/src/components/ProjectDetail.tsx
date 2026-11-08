@@ -7,9 +7,11 @@ import { statusClass } from './ProjectList'
 import { CodeTab } from '../features/CodeTab'
 import { EnvTab } from '../features/EnvTab'
 import { GitTab } from '../features/GitTab'
+import { SnapTab } from '../features/SnapTab'
+import { DbTab } from '../features/DbTab'
 
-type Tab = 'overview' | 'git' | 'code' | 'env'
-const TABS: Tab[] = ['overview', 'git', 'code', 'env']
+type Tab = 'overview' | 'git' | 'code' | 'env' | 'snap' | 'db'
+const TABS: Tab[] = ['overview', 'git', 'code', 'env', 'db', 'snap']
 
 interface Props {
   project: Project
@@ -84,6 +86,8 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
       {tab === 'git' && <GitTab project={p} />}
       {tab === 'code' && <CodeTab project={p} />}
       {tab === 'env' && <EnvTab project={p} />}
+      {tab === 'snap' && <SnapTab project={p} />}
+      {tab === 'db' && <DbTab project={p} />}
 
       {tab === 'overview' && (
         <>

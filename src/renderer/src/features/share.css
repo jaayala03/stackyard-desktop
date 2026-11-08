@@ -1,0 +1,9 @@
+.share-tab { display: flex; flex-direction: column; gap: 16px; padding-bottom: 16px; }
+.share-section h2 { font-size: 1rem; margin: 0 0 8px; }
+.share-section p { margin: 0 0 8px; }
+.share-warning { padding: 8px 10px; border-left: 3px solid #d98f00; background: rgba(217, 143, 0, 0.12); border-radius: 4px; }
+.share-inline { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.share-field { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
+.share-input { padding: 6px 8px; min-width: 220px; border: 1px solid var(--border, #ccc); border-radius: 6px; background: transparent; color: inherit; font: inherit; }
+.share-url { flex: 1 1 280px; }
+.share-log { margin: 0; padding: 10px; height: 200px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--border, #ccc); border-radius: 6px; font-size: 0.85rem; }

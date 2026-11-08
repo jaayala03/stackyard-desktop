@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Language, Settings, Theme } from '@shared/types'
+import type { Language, NotifyMode, Settings, Theme } from '@shared/types'
 import { useT } from '../i18n'
 import { Dialog } from './Dialog'
 
@@ -14,6 +14,12 @@ export function SettingsDialog({ settings, onSave, onClose }: Props): React.JSX.
   const [language, setLanguage] = useState<Language>(settings.language)
   const [theme, setTheme] = useState<Theme>(settings.theme)
   const [projectsDir, setProjectsDir] = useState(settings.projectsDir)
+  const [closeToTray, setCloseToTray] = useState(settings.closeToTray)
+  const [notifications, setNotifications] = useState<NotifyMode>(settings.notifications)
+  const [autoStopMinutes, setAutoStopMinutes] = useState(settings.autoStopMinutes)
+  const [checkUpdates, setCheckUpdates] = useState(settings.checkUpdates)
+  const autoStopOptions = [0, 30, 60, 120]
+  if (!autoStopOptions.includes(autoStopMinutes)) autoStopOptions.push(autoStopMinutes)
 
   const browse = async (): Promise<void> => {
     const dir = await window.api.shell.pickDirectory()
@@ -25,7 +31,7 @@ export function SettingsDialog({ settings, onSave, onClose }: Props): React.JSX.
       title={t('settings.title')}
       onClose={onClose}
       onSubmit={() => {
-        onSave({ language, theme, projectsDir })
+        onSave({ language, theme, projectsDir, closeToTray, notifications, autoStopMinutes, checkUpdates })
         onClose()
       }}
       footer={
@@ -65,6 +71,36 @@ export function SettingsDialog({ settings, onSave, onClose }: Props): React.JSX.
             </button>
           </div>
         </div>
+        <label className="check">
+          <input type="checkbox" checked={closeToTray} onChange={(e) => setCloseToTray(e.target.checked)} />
+          {t('tray.settings.closeToTray')}
+        </label>
+        <label className="field">
+          <span>{t('tray.settings.notifications')}</span>
+          <select value={notifications} onChange={(e) => setNotifications(e.target.value as NotifyMode)}>
+            <option value="background">{t('tray.settings.notify.background')}</option>
+            <option value="always">{t('tray.settings.notify.always')}</option>
+            <option value="never">{t('tray.settings.notify.never')}</option>
+          </select>
+        </label>
+        <label className="field">
+          <span>{t('tray.settings.autoStop')}</span>
+          <select value={autoStopMinutes} onChange={(e) => setAutoStopMinutes(Number(e.target.value))}>
+            {autoStopOptions.map((m) => (
+              <option key={m} value={m}>
+                {m === 0
+                  ? t('tray.settings.autoStop.never')
+                  : m === 30 || m === 60 || m === 120
+                    ? t(`tray.settings.autoStop.${m}` as 'tray.settings.autoStop.30')
+                    : t('tray.settings.autoStop.other', { minutes: m })}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="check">
+          <input type="checkbox" checked={checkUpdates} onChange={(e) => setCheckUpdates(e.target.checked)} />
+          {t('tray.settings.checkUpdates')}
+        </label>
       </div>
     </Dialog>
   )

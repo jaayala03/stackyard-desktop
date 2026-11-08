@@ -7,10 +7,15 @@ import { loadSettings, saveSettings } from './settings'
 import { actionSteps, createSteps, q } from './steps'
 import * as terms from './terminals'
 import { registerFeatures } from './features'
-import { setupTray } from './tray'
+import iconPath from './assets/icon.png?asset'
+import { hasTray, onJobExit, setupTray, trackJob } from './tray'
 import { setupUpdates } from './updates'
 
 let win: BrowserWindow | null = null
+/** Set once the app is really quitting, so closing the window stops hiding it to the tray. */
+let quitting = false
+const startHidden = process.argv.includes('--hidden')
+let shownOnce = false
 
 function createWindow(): void {
   win = new BrowserWindow({
@@ -19,10 +24,22 @@ function createWindow(): void {
     minWidth: 820,
     minHeight: 560,
     title: 'Stackyard',
-    icon: join(__dirname, '../../build/icon.png'),
+    icon: iconPath,
+    show: !(startHidden && !shownOnce),
     webPreferences: { preload: join(__dirname, '../preload/index.js'), sandbox: false, contextIsolation: true }
   })
   win.setMenuBarVisibility(false)
+  shownOnce = true
+  win.on('close', (e) => {
+    // Keep running in the tray instead of quitting (only when there is a tray to come back from).
+    if (!quitting && hasTray() && loadSettings().closeToTray) {
+      e.preventDefault()
+      win?.hide()
+    }
+  })
+  win.on('closed', () => {
+    win = null
+  })
   win.webContents.setWindowOpenHandler(({ url }) => {
     void shell.openExternal(url)
     return { action: 'deny' }
@@ -44,7 +61,10 @@ function applyTheme(): void {
 }
 
 function registerIpc(): void {
-  terms.setEmitter((channel, id, payload) => win?.webContents.send(`term:${channel}`, id, payload))
+  terms.setEmitter((channel, id, payload) => {
+    win?.webContents.send(`term:${channel}`, id, payload)
+    if (channel === 'exit') onJobExit(id, Number(payload))
+  })
 
   registerFeatures({ ipcMain, getWindow: () => win })
 
@@ -60,11 +80,11 @@ function registerIpc(): void {
 
   ipcMain.handle('projects:list', () => ddev.listProjects())
   ipcMain.handle('projects:action', (_e, name: string, approot: string, action: ProjectAction) =>
-    terms.runJob(`${action} ${name}`, actionSteps(approot, action), 'Done')
+    trackJob(terms.runJob(`${action} ${name}`, actionSteps(approot, action), 'Done'), action, name)
   )
   ipcMain.handle('projects:create', async (_e, o: CreateOptions) => {
-    const project = terms.runJob(`create ${o.name}`, createSteps(o), `Project ready: ${o.scheme}://${o.name}.${await ddev.projectTld()}`)
-    return project
+    const done = `Project ready: ${o.scheme}://${o.name}.${await ddev.projectTld()}`
+    return trackJob(terms.runJob(`create ${o.name}`, createSteps(o), done), 'create', o.name)
   })
   ipcMain.handle('projects:detect', (_e, path: string) => ddev.detectType(path))
   ipcMain.handle('projects:ssh', (_e, approot: string, name: string) => terms.openShell(`ssh ${name}`, 'ddev ssh', approot))
@@ -105,23 +125,23 @@ const locked = app.requestSingleInstanceLock()
 if (!locked) {
   app.quit()
 } else {
-  app.on('second-instance', () => {
-    if (win) {
-      if (win.isMinimized()) win.restore()
-      win.focus()
-    }
-  })
+  app.on('second-instance', () => showWindow())
   void app.whenReady().then(() => {
     app.setAppUserModelId('com.jaayala03.stackyard')
     applyTheme()
     registerIpc()
     createWindow()
     setupTray({ getWindow: () => win, showWindow })
+    if (startHidden && !hasTray()) showWindow() // started hidden but there is no tray to reach the app
     setupUpdates(() => win)
-    app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    })
+    app.on('activate', () => showWindow())
   })
-  app.on('before-quit', () => terms.killAll())
-  app.on('window-all-closed', () => app.quit())
+  app.on('before-quit', () => {
+    quitting = true
+    terms.killAll()
+  })
+  // With a tray the app keeps running without windows; otherwise closing the window quits.
+  app.on('window-all-closed', () => {
+    if (quitting || !hasTray()) app.quit()
+  })
 }

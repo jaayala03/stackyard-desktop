@@ -1,3 +1,70 @@
-// Messages for tray. Keys prefixed 'tray.'; both languages must have identical keys.
-export const trayEn = {}
-export const trayEs = {}
+// Messages for the tray menu, notifications and the related settings.
+// Keys are prefixed 'tray.'; both languages must have identical keys.
+// The main process imports this file too (tray menu and notifications).
+export const trayEn = {
+  'tray.menu.open': 'Open Stackyard',
+  'tray.menu.noProjects': 'No projects',
+  'tray.menu.openBrowser': 'Open in browser',
+  'tray.menu.start': 'Start',
+  'tray.menu.stop': 'Stop',
+  'tray.menu.restart': 'Restart',
+  'tray.menu.openFolder': 'Open folder',
+  'tray.menu.stopAll': 'Stop all',
+  'tray.menu.openAtLogin': 'Open at login',
+  'tray.menu.quit': 'Quit',
+  'tray.notify.ok': 'Finished successfully.',
+  'tray.notify.fail': 'Something went wrong. Open Stackyard to see the output.',
+  'tray.notify.job.start': 'Start {name}',
+  'tray.notify.job.stop': 'Stop {name}',
+  'tray.notify.job.restart': 'Restart {name}',
+  'tray.notify.job.delete': 'Delete {name}',
+  'tray.notify.job.create': 'Create {name}',
+  'tray.notify.job.poweroff': 'Stop all projects',
+  'tray.notify.idleStopped': '{name} stopped after {minutes} min without activity',
+  'tray.settings.closeToTray': 'Keep running in the tray when the window is closed',
+  'tray.settings.notifications': 'Notifications',
+  'tray.settings.notify.background': 'When the window is not in focus',
+  'tray.settings.notify.always': 'Always',
+  'tray.settings.notify.never': 'Never',
+  'tray.settings.autoStop': 'Stop idle projects',
+  'tray.settings.autoStop.never': 'Never',
+  'tray.settings.autoStop.30': 'After 30 minutes idle',
+  'tray.settings.autoStop.60': 'After 1 hour idle',
+  'tray.settings.autoStop.120': 'After 2 hours idle',
+  'tray.settings.autoStop.other': 'After {minutes} minutes idle',
+  'tray.settings.checkUpdates': 'Check for updates on start'
+}
+
+export const trayEs: Record<keyof typeof trayEn, string> = {
+  'tray.menu.open': 'Abrir Stackyard',
+  'tray.menu.noProjects': 'Sin proyectos',
+  'tray.menu.openBrowser': 'Abrir en el navegador',
+  'tray.menu.start': 'Iniciar',
+  'tray.menu.stop': 'Detener',
+  'tray.menu.restart': 'Reiniciar',
+  'tray.menu.openFolder': 'Abrir carpeta',
+  'tray.menu.stopAll': 'Detener todos',
+  'tray.menu.openAtLogin': 'Abrir al iniciar sesión',
+  'tray.menu.quit': 'Salir',
+  'tray.notify.ok': 'Terminó correctamente.',
+  'tray.notify.fail': 'Algo salió mal. Abre Stackyard para ver la salida.',
+  'tray.notify.job.start': 'Iniciar {name}',
+  'tray.notify.job.stop': 'Detener {name}',
+  'tray.notify.job.restart': 'Reiniciar {name}',
+  'tray.notify.job.delete': 'Eliminar {name}',
+  'tray.notify.job.create': 'Crear {name}',
+  'tray.notify.job.poweroff': 'Detener todos los proyectos',
+  'tray.notify.idleStopped': '{name} se detuvo tras {minutes} min sin actividad',
+  'tray.settings.closeToTray': 'Seguir en la bandeja al cerrar la ventana',
+  'tray.settings.notifications': 'Notificaciones',
+  'tray.settings.notify.background': 'Cuando la ventana no está en primer plano',
+  'tray.settings.notify.always': 'Siempre',
+  'tray.settings.notify.never': 'Nunca',
+  'tray.settings.autoStop': 'Detener proyectos inactivos',
+  'tray.settings.autoStop.never': 'Nunca',
+  'tray.settings.autoStop.30': 'Tras 30 minutos inactivo',
+  'tray.settings.autoStop.60': 'Tras 1 hora inactivo',
+  'tray.settings.autoStop.120': 'Tras 2 horas inactivo',
+  'tray.settings.autoStop.other': 'Tras {minutes} minutos inactivo',
+  'tray.settings.checkUpdates': 'Buscar actualizaciones al iniciar'
+}

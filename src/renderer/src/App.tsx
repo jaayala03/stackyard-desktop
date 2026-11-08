@@ -6,6 +6,7 @@ import { ProjectDetail } from './components/ProjectDetail'
 import { TerminalPane } from './components/TerminalPane'
 import { ProjectDialog } from './components/ProjectDialog'
 import { SettingsDialog } from './components/SettingsDialog'
+import { UpdateBanner } from './components/UpdateBanner'
 
 const REFRESH_MS = 5000
 
@@ -121,6 +122,7 @@ export function App(): React.JSX.Element {
   return (
     <I18nProvider lang={lang}>
       <div className="app">
+        <UpdateBanner />
         {missing && (
           <div className="banner warn" role="alert">
             {t('tools.missing', { tools: missing })}

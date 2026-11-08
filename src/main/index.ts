@@ -135,7 +135,9 @@ if (!locked) {
 } else {
   app.on('second-instance', () => showWindow())
   void app.whenReady().then(() => {
-    app.setAppUserModelId('com.jaayala03.stackyard')
+    // A different id in development keeps `npm run dev` from registering an "Electron" Start-menu entry that
+    // would steal the name of the installed app in Windows notifications.
+    app.setAppUserModelId(app.isPackaged ? 'com.jaayala03.stackyard' : 'com.jaayala03.stackyard.dev')
     applyTheme()
     registerIpc()
     createWindow()

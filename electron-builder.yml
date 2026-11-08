@@ -27,6 +27,7 @@ mac:
   identity: null
   category: public.app-category.developer-tools
 linux:
+  syncDesktopName: true
   target: [AppImage, deb]
   maintainer: Jonathan Ayala <jaayala03@users.noreply.github.com>
   synopsis: Local web development environments powered by DDEV

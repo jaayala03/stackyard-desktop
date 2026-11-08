@@ -41,7 +41,12 @@ function windowFocused(): boolean {
 /** Desktop notification, respecting the "notifications" setting. */
 export function notify(title: string, body: string, ok = true): void {
   if (!shouldNotify(loadSettings().notifications, windowFocused()) || !Notification.isSupported()) return
-  const n = new Notification({ title: (ok ? '✔ ' : '✘ ') + title, body, urgency: ok ? 'normal' : 'critical' })
+  const n = new Notification({
+    title: (ok ? '✔ ' : '✘ ') + title,
+    body,
+    icon: nativeImage.createFromPath(iconPath), // Windows takes name/icon from the app id; Linux needs this
+    urgency: ok ? 'normal' : 'critical'
+  })
   n.on('click', () => ctx.showWindow())
   n.show()
 }

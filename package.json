@@ -1,6 +1,7 @@
 {
   "name": "stackyard-desktop",
   "productName": "Stackyard",
+  "desktopName": "stackyard.desktop",
   "version": "0.1.0",
   "description": "Local web development environments powered by DDEV, for Windows, macOS and Linux",
   "author": "Jonathan Ayala",

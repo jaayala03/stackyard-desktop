@@ -1,0 +1,26 @@
+.code-tab { display: flex; gap: 12px; height: calc(100vh - 330px); min-height: 320px; }
+.code-side { width: 250px; flex: none; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; }
+.code-toolbar { display: flex; gap: 2px; padding: 6px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.code-tree { flex: 1; overflow: auto; padding: 4px 0; }
+.code-tree-list { list-style: none; margin: 0; padding: 0; }
+.code-row { display: flex; align-items: center; padding-right: 4px; }
+.code-row:hover, .code-row.selected { background: var(--surface-2); }
+.code-row.selected { box-shadow: inset 2px 0 var(--accent); }
+.code-row-main { flex: 1; min-width: 0; display: flex; gap: 4px; align-items: center; background: none; border: 0; padding: 3px 4px; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.code-twist { width: 12px; flex: none; color: var(--muted); }
+.code-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.code-row-actions { display: none; }
+.code-row:hover .code-row-actions, .code-row:focus-within .code-row-actions { display: flex; }
+.code-note { padding: 6px 12px; margin: 0; font-size: 12px; }
+.code-hidden-toggle { padding: 6px 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.code-main { flex: 1; min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; }
+.code-tabs { display: flex; align-items: center; background: var(--surface-2); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.code-file-tab { display: flex; align-items: center; border-right: 1px solid var(--border); }
+.code-file-tab.active { background: var(--surface); box-shadow: inset 0 2px var(--accent); }
+.code-file-name { background: none; border: 0; padding: 8px 6px 8px 12px; color: inherit; font: inherit; cursor: pointer; white-space: nowrap; }
+.code-dirty { color: var(--accent); }
+.code-save { margin-left: auto; margin-right: 6px; flex: none; }
+.code-notice { margin: 0; padding: 6px 12px; }
+.code-editor { flex: 1; min-height: 0; overflow: hidden; }
+.code-empty { margin: auto; }
+@media (max-width: 900px) { .code-side { width: 190px; } }

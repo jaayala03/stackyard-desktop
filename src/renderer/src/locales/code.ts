@@ -1,3 +1,56 @@
 // Messages for the code tab. Keys must be prefixed 'code.'; both languages need the same keys.
-export const codeEn = {} as Record<`code.${string}`, string>
-export const codeEs = {} as Record<`code.${string}`, string>
+export const codeEn = {
+  'code.files': 'Files',
+  'code.refresh': 'Refresh',
+  'code.showHidden': 'Show node_modules, vendor and .git',
+  'code.newFile': 'New file',
+  'code.newFolder': 'New folder',
+  'code.rename': 'Rename',
+  'code.delete': 'Delete',
+  'code.save': 'Save',
+  'code.name': 'Name',
+  'code.empty': 'Open a file from the tree to edit it',
+  'code.loading': 'Loading…',
+  'code.emptyFolder': 'Empty folder',
+  'code.unsaved': 'Unsaved changes',
+  'code.unsavedText': '“{name}” has changes that have not been saved.',
+  'code.discard': 'Discard',
+  'code.saveAndClose': 'Save and close',
+  'code.closeTab': 'Close {name}',
+  'code.deleteTitle': 'Delete {name}?',
+  'code.deleteText': 'This permanently deletes it from disk.',
+  'code.saveFailed': 'Could not save: {error}',
+  'code.opFailed': 'Operation failed: {error}',
+  'code.binary': 'This file is binary and cannot be edited here.',
+  'code.tooLarge': 'This file is larger than 2 MB and cannot be edited here.',
+  'code.notFile': 'This is not a regular file.',
+  'code.readFailed': 'Could not open the file: {error}'
+}
+
+export const codeEs: Record<keyof typeof codeEn, string> = {
+  'code.files': 'Archivos',
+  'code.refresh': 'Actualizar',
+  'code.showHidden': 'Mostrar node_modules, vendor y .git',
+  'code.newFile': 'Nuevo archivo',
+  'code.newFolder': 'Nueva carpeta',
+  'code.rename': 'Renombrar',
+  'code.delete': 'Eliminar',
+  'code.save': 'Guardar',
+  'code.name': 'Nombre',
+  'code.empty': 'Abre un archivo del árbol para editarlo',
+  'code.loading': 'Cargando…',
+  'code.emptyFolder': 'Carpeta vacía',
+  'code.unsaved': 'Cambios sin guardar',
+  'code.unsavedText': '“{name}” tiene cambios que no se han guardado.',
+  'code.discard': 'Descartar',
+  'code.saveAndClose': 'Guardar y cerrar',
+  'code.closeTab': 'Cerrar {name}',
+  'code.deleteTitle': '¿Eliminar {name}?',
+  'code.deleteText': 'Se borrará de forma permanente del disco.',
+  'code.saveFailed': 'No se pudo guardar: {error}',
+  'code.opFailed': 'La operación falló: {error}',
+  'code.binary': 'Este archivo es binario y no se puede editar aquí.',
+  'code.tooLarge': 'Este archivo pesa más de 2 MB y no se puede editar aquí.',
+  'code.notFile': 'No es un archivo normal.',
+  'code.readFailed': 'No se pudo abrir el archivo: {error}'
+}

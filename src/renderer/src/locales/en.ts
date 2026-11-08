@@ -62,6 +62,7 @@ export const en = {
   'terminal.title': 'Terminal',
   'terminal.empty': 'Actions and logs will appear here',
   'terminal.close': 'Close tab',
+  'terminal.resize': 'Drag to resize the terminal',
   'terminal.hide': 'Hide panel',
   'terminal.show': 'Show terminal',
   'dialog.new.title': 'New project',

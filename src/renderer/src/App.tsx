@@ -43,6 +43,13 @@ export function App(): React.JSX.Element {
   }, [lang])
   const t = useMemo(() => makeT(lang), [lang])
 
+  const sessionsRef = useRef<TermSession[]>([])
+  const activeTabRef = useRef<string | null>(null)
+  useEffect(() => {
+    sessionsRef.current = sessions
+    activeTabRef.current = activeTab
+  }, [sessions, activeTab])
+
   const refresh = useCallback(async () => {
     try {
       setProjects(await window.api.projects.list())
@@ -63,9 +70,15 @@ export function App(): React.JSX.Element {
   // Mark terminal sessions as finished and refresh the list right after a job ends.
   useEffect(
     () =>
-      window.api.term.onExit((id) => {
+      window.api.term.onExit((id, code) => {
         setSessions((list) => list.map((s) => (s.id === id ? { ...s, running: false } : s)))
         void refresh()
+        if (code === 0 && sessionsRef.current.find((s) => s.id === id)?.kind === 'job') {
+          // Success: give a moment to read the result, then give the space back. Errors stay open.
+          setTimeout(() => {
+            if (activeTabRef.current === id) setCollapsed(true)
+          }, 4000)
+        }
       }),
     [refresh]
   )
@@ -192,8 +205,9 @@ export function App(): React.JSX.Element {
             mode={dialog}
             settings={settings}
             onClose={() => setDialog(null)}
-            onStarted={(s) => {
+            onStarted={(s, name) => {
               openSession(s)
+              setSelected(name)
             }}
           />
         )}

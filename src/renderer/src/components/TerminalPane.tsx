@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css'
@@ -14,10 +14,65 @@ interface PaneProps {
   onToggle: () => void
 }
 
+const MIN_HEIGHT = 120
+const DEFAULT_HEIGHT = 220
+const clampHeight = (h: number): number => Math.max(MIN_HEIGHT, Math.min(h, Math.round(window.innerHeight * 0.7)))
+
+function loadHeight(): number {
+  try {
+    const saved = Number(localStorage.getItem('terminalHeight'))
+    return saved ? clampHeight(saved) : DEFAULT_HEIGHT
+  } catch {
+    return DEFAULT_HEIGHT
+  }
+}
+
 export function TerminalPane({ sessions, activeId, collapsed, onSelect, onClose, onToggle }: PaneProps): React.JSX.Element {
   const t = useT()
+  const [height, setHeight] = useState(loadHeight)
+
+  const commit = (h: number): void => {
+    const next = clampHeight(h)
+    setHeight(next)
+    try {
+      localStorage.setItem('terminalHeight', String(next))
+    } catch {
+      /* storage may be unavailable */
+    }
+  }
+
+  const startDrag = (e: React.PointerEvent<HTMLDivElement>): void => {
+    e.preventDefault()
+    const startY = e.clientY
+    const startHeight = height
+    const move = (ev: PointerEvent): void => setHeight(clampHeight(startHeight + (startY - ev.clientY)))
+    const up = (ev: PointerEvent): void => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+      commit(startHeight + (startY - ev.clientY))
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+  }
+
   return (
-    <div className={collapsed ? 'terminal-pane collapsed' : 'terminal-pane'}>
+    <div className={collapsed ? 'terminal-pane collapsed' : 'terminal-pane'} style={collapsed ? undefined : { height }}>
+      {!collapsed && (
+        <div
+          className="terminal-resizer"
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label={t('terminal.resize')}
+          aria-valuenow={height}
+          aria-valuemin={MIN_HEIGHT}
+          tabIndex={0}
+          onPointerDown={startDrag}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowUp') commit(height + 24)
+            if (e.key === 'ArrowDown') commit(height - 24)
+          }}
+        />
+      )}
       <div className="terminal-tabs" role="tablist" aria-label={t('terminal.title')}>
         {sessions.map((s) => (
           <div key={s.id} className={s.id === activeId ? 'tab active' : 'tab'}>

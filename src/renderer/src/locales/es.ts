@@ -63,6 +63,7 @@ export const es: Messages = {
   'terminal.title': 'Terminal',
   'terminal.empty': 'Las acciones y los registros aparecerán aquí',
   'terminal.close': 'Cerrar pestaña',
+  'terminal.resize': 'Arrastra para cambiar el alto de la terminal',
   'terminal.hide': 'Ocultar panel',
   'terminal.show': 'Mostrar terminal',
   'dialog.new.title': 'Nuevo proyecto',

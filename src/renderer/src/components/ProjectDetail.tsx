@@ -78,9 +78,9 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
         </div>
       </header>
 
-      <div className="tabs" role="tablist">
+      <div className="ptabs" role="tablist">
         {TABS.filter((id) => id !== 'node' || p.type === 'node').map((id) => (
-          <button key={id} type="button" role="tab" aria-selected={tab === id} className={`tab${tab === id ? ' active' : ''}`} onClick={() => setTab(id)}>
+          <button key={id} type="button" role="tab" aria-selected={tab === id} className={`ptab${tab === id ? ' active' : ''}`} onClick={() => setTab(id)}>
             {t(`tab.${id}` as 'tab.git')}
           </button>
         ))}

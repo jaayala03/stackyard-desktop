@@ -8,7 +8,7 @@ interface Props {
   mode: CreateMode
   settings: Settings
   onClose: () => void
-  onStarted: (session: TermSession) => void
+  onStarted: (session: TermSession, projectName: string) => void
 }
 
 const sep = (): string => (window.api.platform === 'win32' ? '\\' : '/')
@@ -118,7 +118,7 @@ export function ProjectDialog({ mode, settings, onClose, onStarted }: Props): Re
       launch
     }
     try {
-      onStarted(await window.api.projects.create(options))
+      onStarted(await window.api.projects.create(options), options.name)
       onClose()
     } finally {
       setBusy(false)

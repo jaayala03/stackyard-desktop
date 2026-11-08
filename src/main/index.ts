@@ -150,8 +150,9 @@ if (!locked) {
     quitting = true
     terms.killAll()
   })
-  // With a tray the app keeps running without windows; otherwise closing the window quits.
+  // The app only outlives its last window when there is a tray AND the user wants close-to-tray;
+  // otherwise closing the window quits.
   app.on('window-all-closed', () => {
-    if (quitting || !hasTray()) app.quit()
+    if (quitting || !hasTray() || !loadSettings().closeToTray) app.quit()
   })
 }

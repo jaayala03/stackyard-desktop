@@ -62,6 +62,8 @@ export interface TermSession {
 
 export interface Api {
   platform: string
+  /** Generic bridge used by feature modules (git, code, env…): `invoke('git:status', approot)`. */
+  invoke<T = unknown>(channel: string, ...args: unknown[]): Promise<T>
   settings: { get(): Promise<Settings>; set(s: Partial<Settings>): Promise<Settings> }
   system: { tools(): Promise<ToolStatus>; systemLocale(): Promise<string> }
   projects: {

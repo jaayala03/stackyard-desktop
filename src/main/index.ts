@@ -6,6 +6,7 @@ import * as ddev from './ddev'
 import { loadSettings, saveSettings } from './settings'
 import { actionSteps, createSteps, q } from './steps'
 import * as terms from './terminals'
+import { registerFeatures } from './features'
 
 let win: BrowserWindow | null = null
 
@@ -34,6 +35,8 @@ function applyTheme(): void {
 
 function registerIpc(): void {
   terms.setEmitter((channel, id, payload) => win?.webContents.send(`term:${channel}`, id, payload))
+
+  registerFeatures({ ipcMain, getWindow: () => win })
 
   ipcMain.handle('settings:get', () => loadSettings())
   ipcMain.handle('settings:set', (_e, patch) => {

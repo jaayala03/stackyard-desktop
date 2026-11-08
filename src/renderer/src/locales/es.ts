@@ -1,6 +1,12 @@
 import type { Messages } from './en'
+import { gitEs } from './git'
+import { codeEs } from './code'
+import { envEs } from './env'
 
 export const es: Messages = {
+  ...gitEs,
+  ...codeEs,
+  ...envEs,
   'app.name': 'Stackyard',
   'search.placeholder': 'Buscar proyectos…',
   'projects.empty': 'Aún no hay proyectos',
@@ -76,5 +82,9 @@ export const es: Messages = {
   'lang.auto': 'Predeterminado del sistema',
   'theme.system': 'Predeterminado del sistema',
   'theme.light': 'Claro',
-  'theme.dark': 'Oscuro'
+  'theme.dark': 'Oscuro',
+  'tab.overview': 'Resumen',
+  'tab.git': 'Git',
+  'tab.code': 'Código',
+  'tab.env': '.env'
 }

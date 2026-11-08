@@ -3,6 +3,10 @@ import type { Api } from '../shared/types'
 
 const api: Api = {
   platform: process.platform,
+  invoke: (channel, ...args) => {
+    if (!/^(git|code|env):/.test(channel)) return Promise.reject(new Error(`Blocked channel ${channel}`))
+    return ipcRenderer.invoke(channel, ...args)
+  },
   settings: {
     get: () => ipcRenderer.invoke('settings:get'),
     set: (s) => ipcRenderer.invoke('settings:set', s)

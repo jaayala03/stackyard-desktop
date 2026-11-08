@@ -556,3 +556,8 @@ input[aria-invalid='true'] {
     grid-template-columns: 1fr;
   }
 }
+
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border, #ccc); margin: 12px 0; }
+.tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 14px; cursor: pointer; color: inherit; font: inherit; }
+.tab:hover { background: rgba(127, 127, 127, 0.12); }
+.tab.active { border-bottom-color: var(--accent, #3b82f6); font-weight: 600; }

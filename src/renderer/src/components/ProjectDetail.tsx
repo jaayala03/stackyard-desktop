@@ -4,6 +4,12 @@ import { PROJECT_TYPES, WEBSERVERS, DATABASES } from '@shared/catalog'
 import { useT } from '../i18n'
 import { ConfirmDialog } from './ConfirmDialog'
 import { statusClass } from './ProjectList'
+import { CodeTab } from '../features/CodeTab'
+import { EnvTab } from '../features/EnvTab'
+import { GitTab } from '../features/GitTab'
+
+type Tab = 'overview' | 'git' | 'code' | 'env'
+const TABS: Tab[] = ['overview', 'git', 'code', 'env']
 
 interface Props {
   project: Project
@@ -17,6 +23,7 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
   const t = useT()
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [editorMissing, setEditorMissing] = useState(false)
+  const [tab, setTab] = useState<Tab>('overview')
   const running = p.status === 'running'
   const state = statusClass(p.status)
 
@@ -66,6 +73,20 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
         </div>
       </header>
 
+      <div className="tabs" role="tablist">
+        {TABS.map((id) => (
+          <button key={id} type="button" role="tab" aria-selected={tab === id} className={`tab${tab === id ? ' active' : ''}`} onClick={() => setTab(id)}>
+            {t(`tab.${id}` as 'tab.git')}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'git' && <GitTab project={p} />}
+      {tab === 'code' && <CodeTab project={p} />}
+      {tab === 'env' && <EnvTab project={p} />}
+
+      {tab === 'overview' && (
+        <>
       <dl className="facts">
         {fields.map(([k, v]) => (
           <div key={k} className="fact">
@@ -102,6 +123,8 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
         <p className="error-text" role="alert">
           {t('detail.noEditor')}
         </p>
+      )}
+        </>
       )}
 
       {confirmDelete && (

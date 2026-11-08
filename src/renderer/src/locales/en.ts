@@ -1,4 +1,11 @@
+import { gitEn } from './git'
+import { codeEn } from './code'
+import { envEn } from './env'
+
 export const en = {
+  ...gitEn,
+  ...codeEn,
+  ...envEn,
   'app.name': 'Stackyard',
   'search.placeholder': 'Search projects…',
   'projects.empty': 'No projects yet',
@@ -74,7 +81,11 @@ export const en = {
   'lang.auto': 'System default',
   'theme.system': 'System default',
   'theme.light': 'Light',
-  'theme.dark': 'Dark'
+  'theme.dark': 'Dark',
+  'tab.overview': 'Overview',
+  'tab.git': 'Git',
+  'tab.code': 'Code',
+  'tab.env': '.env'
 }
 
 export type Messages = typeof en

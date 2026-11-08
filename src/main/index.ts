@@ -7,6 +7,8 @@ import { loadSettings, saveSettings } from './settings'
 import { actionSteps, createSteps, q } from './steps'
 import * as terms from './terminals'
 import { registerFeatures } from './features'
+import { setupTray } from './tray'
+import { setupUpdates } from './updates'
 
 let win: BrowserWindow | null = null
 
@@ -27,6 +29,14 @@ function createWindow(): void {
   })
   if (process.env.ELECTRON_RENDERER_URL) void win.loadURL(process.env.ELECTRON_RENDERER_URL)
   else void win.loadFile(join(__dirname, '../renderer/index.html'))
+}
+
+/** Shows and focuses the main window (recreating it if it was closed). */
+function showWindow(): void {
+  if (!win || win.isDestroyed()) createWindow()
+  win?.show()
+  if (win?.isMinimized()) win.restore()
+  win?.focus()
 }
 
 function applyTheme(): void {
@@ -106,6 +116,8 @@ if (!locked) {
     applyTheme()
     registerIpc()
     createWindow()
+    setupTray({ getWindow: () => win, showWindow })
+    setupUpdates(() => win)
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })

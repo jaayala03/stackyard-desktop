@@ -11,9 +11,10 @@ import { SnapTab } from '../features/SnapTab'
 import { DbTab } from '../features/DbTab'
 import { NodeTab } from '../features/NodeTab'
 import { DeployTab } from '../features/DeployTab'
+import { ShareTab } from '../features/ShareTab'
 
-type Tab = 'overview' | 'git' | 'code' | 'env' | 'snap' | 'db' | 'node' | 'deploy'
-const TABS: Tab[] = ['overview', 'node', 'git', 'code', 'env', 'db', 'snap', 'deploy']
+type Tab = 'overview' | 'git' | 'code' | 'env' | 'snap' | 'db' | 'node' | 'deploy' | 'share'
+const TABS: Tab[] = ['overview', 'node', 'git', 'code', 'env', 'db', 'snap', 'share', 'deploy']
 
 interface Props {
   project: Project
@@ -92,6 +93,7 @@ export function ProjectDetail({ project: p, busy, onAction, onSsh, onLogs }: Pro
       {tab === 'db' && <DbTab project={p} />}
       {tab === 'node' && <NodeTab project={p} />}
       {tab === 'deploy' && <DeployTab project={p} />}
+      {tab === 'share' && <ShareTab project={p} />}
 
       {tab === 'overview' && (
         <>

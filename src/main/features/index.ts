@@ -6,6 +6,7 @@ import * as snap from './snap'
 import * as db from './db'
 import * as node from './node'
 import * as deploy from './deploy'
+import * as share from './share'
 
 export interface FeatureContext {
   ipcMain: IpcMain
@@ -20,4 +21,5 @@ export function registerFeatures({ ipcMain }: FeatureContext): void {
   db.register(ipcMain)
   node.register(ipcMain)
   deploy.register(ipcMain)
+  share.register(ipcMain)
 }

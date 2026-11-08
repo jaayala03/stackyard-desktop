@@ -39,10 +39,18 @@ export interface CreateOptions {
 export type Language = 'auto' | 'en' | 'es'
 export type Theme = 'system' | 'light' | 'dark'
 
+export type NotifyMode = 'always' | 'background' | 'never'
+
 export interface Settings {
   language: Language
   theme: Theme
   projectsDir: string
+  /** Minimise to the tray instead of quitting when the window is closed. */
+  closeToTray: boolean
+  notifications: NotifyMode
+  /** Stop idle projects after this many minutes (0 = never). */
+  autoStopMinutes: number
+  checkUpdates: boolean
 }
 
 export type ProjectAction = 'start' | 'stop' | 'restart' | 'delete'

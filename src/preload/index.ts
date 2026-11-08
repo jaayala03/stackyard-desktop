@@ -4,7 +4,7 @@ import type { Api } from '../shared/types'
 const api: Api = {
   platform: process.platform,
   invoke: (channel, ...args) => {
-    if (!/^(git|code|env|snap|db|node|deploy):/.test(channel)) return Promise.reject(new Error(`Blocked channel ${channel}`))
+    if (!/^(git|code|env|snap|db|node|deploy|share|update):/.test(channel)) return Promise.reject(new Error(`Blocked channel ${channel}`))
     return ipcRenderer.invoke(channel, ...args)
   },
   settings: {

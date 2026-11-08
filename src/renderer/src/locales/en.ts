@@ -5,6 +5,9 @@ import { snapEn } from './snap'
 import { dbEn } from './db'
 import { nodeEn } from './node'
 import { deployEn } from './deploy'
+import { shareEn } from './share'
+import { updateEn } from './update'
+import { trayEn } from './tray'
 
 export const en = {
   ...gitEn,
@@ -14,6 +17,9 @@ export const en = {
   ...dbEn,
   ...nodeEn,
   ...deployEn,
+  ...shareEn,
+  ...updateEn,
+  ...trayEn,
   'app.name': 'Stackyard',
   'search.placeholder': 'Search projects…',
   'projects.empty': 'No projects yet',
@@ -97,7 +103,8 @@ export const en = {
   'tab.snap': 'Snapshots',
   'tab.db': 'Database',
   'tab.node': 'Node.js',
-  'tab.deploy': 'Deploy'
+  'tab.deploy': 'Deploy',
+  'tab.share': 'Share'
 }
 
 export type Messages = typeof en

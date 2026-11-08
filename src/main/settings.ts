@@ -12,7 +12,12 @@ function defaultProjectsDir(): string {
   return join(homedir(), 'projects')
 }
 
-const defaults = (): Settings => ({ language: 'auto', theme: 'system', projectsDir: defaultProjectsDir() })
+const defaults = (): Settings => ({ language: 'auto', theme: 'system', projectsDir: defaultProjectsDir(),
+  closeToTray: true,
+  notifications: 'background',
+  autoStopMinutes: 0,
+  checkUpdates: true
+})
 
 export function loadSettings(): Settings {
   try {

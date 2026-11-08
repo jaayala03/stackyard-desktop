@@ -6,6 +6,9 @@ import { snapEs } from './snap'
 import { dbEs } from './db'
 import { nodeEs } from './node'
 import { deployEs } from './deploy'
+import { shareEs } from './share'
+import { updateEs } from './update'
+import { trayEs } from './tray'
 
 export const es: Messages = {
   ...gitEs,
@@ -15,6 +18,9 @@ export const es: Messages = {
   ...dbEs,
   ...nodeEs,
   ...deployEs,
+  ...shareEs,
+  ...updateEs,
+  ...trayEs,
   'app.name': 'Stackyard',
   'search.placeholder': 'Buscar proyectos…',
   'projects.empty': 'Aún no hay proyectos',
@@ -98,5 +104,6 @@ export const es: Messages = {
   'tab.snap': 'Snapshots',
   'tab.db': 'Base de datos',
   'tab.node': 'Node.js',
-  'tab.deploy': 'Deploy'
+  'tab.deploy': 'Deploy',
+  'tab.share': 'Compartir'
 }

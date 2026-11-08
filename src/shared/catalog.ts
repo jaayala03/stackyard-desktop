@@ -16,6 +16,7 @@ export const PROJECT_TYPES: ProjectType[] = [
   { value: 'cakephp', label: 'CakePHP', docroot: 'webroot', scaffold: ['ddev', 'composer', 'create-project', 'cakephp/app'] },
   { value: 'craftcms', label: 'Craft CMS', docroot: 'web', scaffold: ['ddev', 'composer', 'create-project', 'craftcms/craft'] },
   { value: 'magento2', label: 'Magento 2', docroot: 'pub' },
+  { value: 'node', label: 'Node.js (Express, Vite, monorepo…)', docroot: '' },
   { value: 'generic', label: 'Generic (no PHP)', docroot: '' }
 ]
 

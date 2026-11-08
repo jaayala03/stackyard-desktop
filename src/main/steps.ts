@@ -2,6 +2,7 @@ import { access, copyFile, mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { PROJECT_TYPES } from '../shared/catalog'
 import type { CreateOptions, ProjectAction } from '../shared/types'
+import { configureSteps } from './features/node-steps'
 
 /**
  * One unit of work in a job. `command` runs in the platform shell, `run` runs in
@@ -53,14 +54,14 @@ export function createSteps(o: CreateOptions): Step[] {
     steps.push({ title: `Creating folder ${o.path}`, run: async () => void (await mkdir(o.path, { recursive: true })) })
   }
 
-  steps.push({ title: 'Configuring DDEV', command: `ddev config ${configFlags(o)}`, cwd: o.path })
+  steps.push(...configureSteps(o, configFlags(o)))
 
   const type = PROJECT_TYPES.find((p) => p.value === o.type)
   if (o.mode === 'new') {
     if (o.scaffold && type?.scaffold) {
       if (o.type === 'wordpress') steps.push({ title: 'Starting the project', command: 'ddev start', cwd: o.path })
       steps.push({ title: `Installing ${type.label}`, command: type.scaffold.join(' '), cwd: o.path })
-    } else if (o.type !== 'generic') {
+    } else if (o.type !== 'generic' && o.type !== 'node') {
       steps.push({
         title: 'Creating index.php',
         run: async () => {
@@ -96,7 +97,13 @@ export function createSteps(o: CreateOptions): Step[] {
         }
       }
     })
-    steps.push({ title: 'npm install', command: 'ddev npm install', cwd: o.path, when: () => exists(at('package.json')) })
+    // Node projects install their dependencies inside the container on start (post-start hook)
+    steps.push({
+      title: 'npm install',
+      command: 'ddev npm install',
+      cwd: o.path,
+      when: async () => (await exists(at('package.json'))) && !(await exists(at('.ddev/config.stackyard.yaml')))
+    })
   }
   return steps
 }

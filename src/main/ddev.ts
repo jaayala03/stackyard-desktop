@@ -5,6 +5,7 @@ import { join } from 'node:path'
 import { promisify } from 'node:util'
 import { parse } from 'yaml'
 import type { Project, ToolStatus } from '../shared/types'
+import { isNodeProject } from './features/node-plan'
 
 const run = promisify(execFile)
 
@@ -63,11 +64,15 @@ export function parseConfig(text: string): ProjectConfig {
 }
 
 async function readConfig(approot: string): Promise<ProjectConfig> {
+  let cfg: ProjectConfig
   try {
-    return parseConfig(await readFile(join(approot, '.ddev', 'config.yaml'), 'utf8'))
+    cfg = parseConfig(await readFile(join(approot, '.ddev', 'config.yaml'), 'utf8'))
   } catch {
-    return parseConfig('')
+    cfg = parseConfig('')
   }
+  // projects set up by Stackyard for Node (backend/frontend as services) are DDEV "generic" projects
+  if (await has(join(approot, '.ddev', 'config.stackyard.yaml'))) cfg.type = 'node'
+  return cfg
 }
 
 export async function listProjects(): Promise<Project[]> {
@@ -132,6 +137,7 @@ async function has(path: string): Promise<boolean> {
 
 /** Best guess of (project type, docroot) from the files in `path`. */
 export async function detectType(path: string): Promise<{ type: string; docroot: string }> {
+  if (await isNodeProject(path)) return { type: 'node', docroot: '' }
   for (const [files, type, docroot] of MARKERS) {
     const found = await Promise.all(files.map((f) => has(join(path, f))))
     if (found.every(Boolean)) return { type, docroot }

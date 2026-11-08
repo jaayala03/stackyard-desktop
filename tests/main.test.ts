@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { parseConfig, parseList } from '../src/main/ddev'
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { detectType, parseConfig, parseList } from '../src/main/ddev'
 import { actionSteps, configFlags, createSteps, q } from '../src/main/steps'
 import type { CreateOptions } from '../src/shared/types'
 
@@ -69,5 +72,45 @@ describe('configFlags / actions', () => {
   })
   it('builds a ddev command per action', () => {
     expect(actionSteps('/p', 'restart')[0].command).toBe('ddev restart')
+  })
+})
+
+describe('Node project type', () => {
+  it('is offered in the catalog', async () => {
+    const { PROJECT_TYPES } = await import('../src/shared/catalog')
+    expect(PROJECT_TYPES.some((t) => t.value === 'node')).toBe(true)
+  })
+
+  it('detects Node projects before PHP markers', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'stackyard-detect-'))
+    try {
+      await writeFile(join(dir, 'package.json'), JSON.stringify({ dependencies: { express: '4' } }))
+      expect(await detectType(dir)).toEqual({ type: 'node', docroot: '' })
+      await writeFile(join(dir, 'artisan'), '')
+      expect((await detectType(dir)).type).toBe('laravel')
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('does not create index.php nor scaffold for a new Node project', () => {
+    const titles = createSteps({ ...base, type: 'node', docroot: '' }).map((s) => s.title)
+    expect(titles).toContain('Configuring DDEV for Node (backend and frontend as services)')
+    expect(titles).not.toContain('Creating index.php')
+    expect(titles[titles.length - 1]).toBe('Starting the project')
+  })
+
+  it('installs dependencies in the container for Node projects only through the start hook', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'stackyard-deps-'))
+    try {
+      await writeFile(join(dir, 'package.json'), '{}')
+      const step = createSteps({ ...base, mode: 'existing', path: dir, type: 'php', deps: true }).find((s) => s.title === 'npm install')!
+      expect(await step.when!()).toBe(true)
+      await mkdir(join(dir, '.ddev'))
+      await writeFile(join(dir, '.ddev', 'config.stackyard.yaml'), '')
+      expect(await step.when!()).toBe(false)
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
   })
 })

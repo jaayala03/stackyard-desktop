@@ -1,0 +1,15 @@
+.node-tab { display: flex; flex-direction: column; gap: 18px; padding-bottom: 16px; }
+.node-section h2 { font-size: 1rem; margin: 0 0 8px; }
+.node-section p { margin: 0 0 8px; }
+.node-table-wrap { overflow-x: auto; border: 1px solid var(--border, #ccc); border-radius: 8px; }
+.node-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.node-table th, .node-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border, #ccc); vertical-align: middle; }
+.node-table thead th { color: var(--muted, #888); font-weight: 600; }
+.node-table tbody tr:last-child th, .node-table tbody tr:last-child td { border-bottom: 0; }
+.node-badge { margin-left: 8px; padding: 1px 6px; border-radius: 999px; font-size: 0.75rem; font-weight: 500; background: color-mix(in srgb, var(--accent, #3b82f6) 18%, transparent); }
+.node-input { width: 100%; min-width: 160px; padding: 6px 8px; border: 1px solid var(--border, #ccc); border-radius: 6px; background: transparent; color: inherit; font: inherit; }
+.node-port { min-width: 0; width: 84px; }
+.node-info { margin: 10px 0 0; }
+.node-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.node-output { margin: 0; padding: 10px; max-height: 280px; overflow: auto; white-space: pre-wrap; border: 1px solid var(--border, #ccc); border-radius: 6px; font-size: 0.85rem; }
+.node-output.failed { border-color: var(--danger, #d33); }

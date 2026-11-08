@@ -52,6 +52,8 @@ export function ProjectDialog({ mode, settings, onClose, onStarted }: Props): Re
   const path = mode === 'existing' ? existingPath : name ? join(parent, name) : ''
   const typeInfo = PROJECT_TYPES.find((x) => x.value === type)
   const nameValid = NAME_RE.test(name)
+  // Node projects run their backend/frontend as DDEV services: no PHP, web server, database or docroot to pick
+  const isNode = type === 'node'
 
   // Auto type: re-detect when the folder of an existing project changes.
   useEffect(() => {
@@ -112,7 +114,7 @@ export function ProjectDialog({ mode, settings, onClose, onStarted }: Props): Re
       scheme,
       scaffold: mode === 'new' && scaffold && !!typeInfo?.scaffold,
       deps: mode !== 'new' && deps,
-      phpmyadmin,
+      phpmyadmin: phpmyadmin && !isNode,
       launch
     }
     try {
@@ -216,19 +218,23 @@ export function ProjectDialog({ mode, settings, onClose, onStarted }: Props): Re
             ))}
           </select>
         </label>
-        <label className="field">
-          <span>{t('field.docroot')}</span>
-          <input value={docroot} onChange={(e) => setDocroot(e.target.value)} placeholder="public" />
-        </label>
+        {!isNode && (
+          <label className="field">
+            <span>{t('field.docroot')}</span>
+            <input value={docroot} onChange={(e) => setDocroot(e.target.value)} placeholder="public" />
+          </label>
+        )}
 
-        <label className="field">
-          <span>{t('field.php')}</span>
-          <select value={php} onChange={(e) => setPhp(e.target.value)}>
-            {PHP_VERSIONS.map((v) => (
-              <option key={v}>{v}</option>
-            ))}
-          </select>
-        </label>
+        {!isNode && (
+          <label className="field">
+            <span>{t('field.php')}</span>
+            <select value={php} onChange={(e) => setPhp(e.target.value)}>
+              {PHP_VERSIONS.map((v) => (
+                <option key={v}>{v}</option>
+              ))}
+            </select>
+          </label>
+        )}
         <label className="field">
           <span>{t('field.node')}</span>
           <select value={node} onChange={(e) => setNode(e.target.value)}>
@@ -237,26 +243,30 @@ export function ProjectDialog({ mode, settings, onClose, onStarted }: Props): Re
             ))}
           </select>
         </label>
-        <label className="field">
-          <span>{t('field.webserver')}</span>
-          <select value={webserver} onChange={(e) => setWebserver(e.target.value)}>
-            {WEBSERVERS.map((w) => (
-              <option key={w.value} value={w.value}>
-                {w.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="field">
-          <span>{t('field.db')}</span>
-          <select value={db} onChange={(e) => setDb(e.target.value)}>
-            {DATABASES.map((d) => (
-              <option key={d.value} value={d.value}>
-                {d.label}
-              </option>
-            ))}
-          </select>
-        </label>
+        {!isNode && (
+          <>
+            <label className="field">
+              <span>{t('field.webserver')}</span>
+              <select value={webserver} onChange={(e) => setWebserver(e.target.value)}>
+                {WEBSERVERS.map((w) => (
+                  <option key={w.value} value={w.value}>
+                    {w.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="field">
+              <span>{t('field.db')}</span>
+              <select value={db} onChange={(e) => setDb(e.target.value)}>
+                {DATABASES.map((d) => (
+                  <option key={d.value} value={d.value}>
+                    {d.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </>
+        )}
         <label className="field span2">
           <span>{t('field.scheme')}</span>
           <select value={scheme} onChange={(e) => setScheme(e.target.value as 'https' | 'http')}>
@@ -278,10 +288,12 @@ export function ProjectDialog({ mode, settings, onClose, onStarted }: Props): Re
               {t('field.deps')}
             </label>
           )}
-          <label className="check">
-            <input type="checkbox" checked={phpmyadmin} onChange={(e) => setPhpmyadmin(e.target.checked)} />
-            {t('field.phpmyadmin')}
-          </label>
+          {!isNode && (
+            <label className="check">
+              <input type="checkbox" checked={phpmyadmin} onChange={(e) => setPhpmyadmin(e.target.checked)} />
+              {t('field.phpmyadmin')}
+            </label>
+          )}
           <label className="check">
             <input type="checkbox" checked={launch} onChange={(e) => setLaunch(e.target.checked)} />
             {t('field.launch')}

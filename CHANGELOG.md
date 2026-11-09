@@ -6,6 +6,8 @@ All published versions of Stackyard Desktop. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-08
+
 ### Added
 - Cross-platform rewrite of [Stackyard](https://github.com/jaayala03/stackyard) with Electron, React and TypeScript
   (Windows, macOS and Linux).
@@ -16,3 +18,7 @@ All published versions of Stackyard Desktop. The format follows
 - Tray icon, notifications, auto-stop of idle projects and update notice.
 - English and Spanish; light and dark themes.
 - MIT license and terms of use (`TERMS.md`, `TERMINOS.md`).
+
+### Fixed
+- Closing the window quits the app when "close to tray" is off.
+- Windows notifications show the Stackyard name and icon (a separate app id is used in development).
